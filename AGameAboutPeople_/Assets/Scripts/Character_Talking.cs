@@ -15,10 +15,13 @@ public class Character_Talking : MonoBehaviour
         current_state = 0;
     }
 
-    void interacted_with(){
+    public void interact(){
         if(current_state == 0){
             Debug.Log(talking_scene);
             Debug.Log("Should start here");
+            current_state = 1;
+            UIScript.suc++;
+            UIScript.p_remain--;
         } else if(current_state == 1){
             Debug.Log("You've already succeeded.");
         } else {
