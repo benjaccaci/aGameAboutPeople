@@ -15,13 +15,27 @@ public class Character_Talking : MonoBehaviour
         current_state = 0;
     }
 
+    public void interact_success(){
+        current_state = 1;
+        UIScript.suc++;
+        UIScript.p_remain--;
+        SpriteRenderer m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        m_SpriteRenderer.color = Color.green;
+    }
+
+    public void interact_fail(){
+        current_state = -1;
+        UIScript.p_remain--;
+        SpriteRenderer m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        m_SpriteRenderer.color = Color.red;
+    }
+
+
     public void interact(){
         if(current_state == 0){
             Debug.Log(talking_scene);
             Debug.Log("Should start here");
-            current_state = 1;
-            UIScript.suc++;
-            UIScript.p_remain--;
+            interact_success();
         } else if(current_state == 1){
             Debug.Log("You've already succeeded.");
         } else {
