@@ -34,8 +34,8 @@ public class Character_Talking : MonoBehaviour
     public void interact(){
         if(current_state == 0){
             Debug.Log(talking_scene);
-            Debug.Log("Should start here");
-            interact_success();
+            //Debug.Log("Should start here");
+            //interact_success();
         } else if(current_state == 1){
             Debug.Log("You've already succeeded.");
         } else {
