@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Ink JSON")]
+    [SerializeField] private TextAsset inkJSON;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
