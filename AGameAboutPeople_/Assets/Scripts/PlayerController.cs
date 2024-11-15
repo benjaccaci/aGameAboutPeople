@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb;
+    
+    [SerializeField]
     float speed = 10f;
 
     GameObject interaction;
