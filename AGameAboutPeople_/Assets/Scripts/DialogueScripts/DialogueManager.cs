@@ -18,7 +18,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
-
+    [SerializeField] private GameObject promptNextLineDialogue;
 
     private void Awake()
     {
@@ -97,6 +97,14 @@ public class DialogueManager : MonoBehaviour
             choices[index].gameObject.SetActive(true);
             choicesText[index].text = choice.text;
             index++;
+        }
+
+        if (index == 0)
+        {
+            promptNextLineDialogue.SetActive(true);
+        } else
+        {
+            promptNextLineDialogue.SetActive(false);
         }
 
         for (int i = index; i < choices.Length; i++)
