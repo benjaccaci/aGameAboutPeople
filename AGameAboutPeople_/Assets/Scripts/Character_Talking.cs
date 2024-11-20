@@ -34,7 +34,9 @@ public class Character_Talking : MonoBehaviour
     public void interact(){
         if(current_state == 0){
             Debug.Log(talking_scene);
-            SceneManager.LoadScene(talking_scene);
+            if(talking_scene != ""){
+                SceneManager.LoadScene(talking_scene);
+            }
             //Debug.Log("Should start here");
             //interact_success();
         } else if(current_state == 1){
