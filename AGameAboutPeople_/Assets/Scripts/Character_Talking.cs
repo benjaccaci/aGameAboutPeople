@@ -18,7 +18,6 @@ public class Character_Talking : MonoBehaviour
 
     public void interact_success(){
         current_state = 1;
-        UIScript.suc++;
         UIScript.p_remain--;
         SpriteRenderer m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_SpriteRenderer.color = Color.green;
