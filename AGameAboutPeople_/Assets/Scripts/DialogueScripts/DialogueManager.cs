@@ -12,6 +12,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject betweenRunsPanel;
     [SerializeField] private TextMeshProUGUI betweenRunsText;
+    [SerializeField] private GameObject startingPanel;
+    [SerializeField] private TextMeshProUGUI startingText;
     [SerializeField] private TextAsset inkJSON;
     private bool canPressButtonE;
     private bool canAdvToNextRun;
@@ -51,7 +53,7 @@ public class DialogueManager : MonoBehaviour
             index++;
         }
 
-        EnterDialogue();
+        startingPanel.SetActive(true);
     }
 
     private void Update()
@@ -70,6 +72,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogue()
     {
+        startingPanel.SetActive(false);
         betweenRunsPanel.SetActive(false);
         betweenRunsText.text = "";
         currentStory = new Story(inkJSON.text);
@@ -142,6 +145,11 @@ public class DialogueManager : MonoBehaviour
     {
         currentStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
+    }
+
+    public void firstStart()
+    {
+        EnterDialogue();
     }
 }
 
