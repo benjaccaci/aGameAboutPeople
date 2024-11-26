@@ -103,7 +103,7 @@ public class DialogueManager : MonoBehaviour
         currentStory.ResetState();
         runNumber++;
         betweenRunsPanel.SetActive(true);
-        betweenRunsText.text = "Run: " + runNumber + "/10.";
+        betweenRunsText.text = "Run: " + runNumber + " out of 10. Press [A] to try again!";
     }
 
     private void DisplayChoices()
