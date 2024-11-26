@@ -1,5 +1,5 @@
 CONST winCondition = "You convinced Abby! Conversation over."
-CONST lossCondition = "Abby isn't convinced... Conversation over."
+CONST lossCondition = "Abby is NOT convinced, and conversation is over."
 
 -> main
 
