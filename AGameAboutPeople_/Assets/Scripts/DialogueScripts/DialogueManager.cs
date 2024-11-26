@@ -10,7 +10,12 @@ public class DialogueManager : MonoBehaviour
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private GameObject betweenRunsPanel;
+    [SerializeField] private TextMeshProUGUI betweenRunsText;
     [SerializeField] private TextAsset inkJSON;
+    private bool canPressButtonE;
+    private bool canAdvToNextRun;
+    private int runNumber;
 
     private Story currentStory;
     private static DialogueManager instance;
@@ -27,11 +32,15 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("Multiple dialogue managers.");
         }
         instance = this;
+        runNumber = 0;
     }
 
     private void Start()
     {
         dialoguePanel.SetActive(false);
+        canPressButtonE = false;
+        canAdvToNextRun = false;
+        betweenRunsPanel.SetActive(false);
 
         choicesText = new TextMeshProUGUI[choices.Length];
         int index = 0;
@@ -42,25 +51,29 @@ public class DialogueManager : MonoBehaviour
             index++;
         }
 
-
         EnterDialogue();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && canPressButtonE)
         {
             ContinueStory();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            EnterDialogue();
         }
     }
 
 
-
     public void EnterDialogue()
     {
+        betweenRunsPanel.SetActive(false);
+        betweenRunsText.text = "";
         currentStory = new Story(inkJSON.text);
         dialoguePanel.SetActive(true);
-
         ContinueStory();
     }
 
@@ -70,6 +83,7 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text = currentStory.Continue();
             DisplayChoices();
+            canPressButtonE = true;
         } else
         {
             ExitDialogue();
@@ -80,6 +94,16 @@ public class DialogueManager : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+
+        resetDialogue();
+    }
+
+    private void resetDialogue()
+    {
+        currentStory.ResetState();
+        runNumber++;
+        betweenRunsPanel.SetActive(true);
+        betweenRunsText.text = "Run: " + runNumber + "/10.";
     }
 
     private void DisplayChoices()
