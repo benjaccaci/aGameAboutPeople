@@ -15,12 +15,15 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject startingPanel;
     [SerializeField] private TextMeshProUGUI startingText;
     [SerializeField] private TextAsset inkJSON;
+    [SerializeField] private GameObject gameWonPanel;
     private bool canPressButtonE;
-    private bool canAdvToNextRun;
     private int runNumber;
 
     private Story currentStory;
     private static DialogueManager instance;
+
+    Color abbyColor = new Color(0.733f, 0.478f, 0.769f);
+    Color playerColor = new Color(0.471f, 0.694f, 0.761f);
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -41,8 +44,8 @@ public class DialogueManager : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
         canPressButtonE = false;
-        canAdvToNextRun = false;
         betweenRunsPanel.SetActive(false);
+        gameWonPanel.SetActive(false);
 
         choicesText = new TextMeshProUGUI[choices.Length];
         int index = 0;
@@ -62,11 +65,6 @@ public class DialogueManager : MonoBehaviour
         {
             ContinueStory();
         }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            EnterDialogue();
-        }
     }
 
 
@@ -85,12 +83,36 @@ public class DialogueManager : MonoBehaviour
         if (currentStory.canContinue)
         {
             dialogueText.text = currentStory.Continue();
+
+            if (currentStory.currentTags.Contains("Win"))
+            {
+                winConditionEnd();
+
+            } else if (currentStory.currentTags.Contains("Abby"))
+            {
+                dialogueText.color = abbyColor;
+                dialogueText.fontStyle = FontStyles.Italic;
+                dialogueText.fontStyle = FontStyles.Bold;
+            }
+            else
+            {
+                dialogueText.color = playerColor;
+                dialogueText.fontStyle = FontStyles.Bold;
+            }
             DisplayChoices();
             canPressButtonE = true;
         } else
         {
             ExitDialogue();
         }
+    }
+
+    private void winConditionEnd()
+    {
+        dialoguePanel.SetActive(false);
+        dialogueText.text = "";
+
+        gameWonPanel.SetActive(true);
     }
 
     private void ExitDialogue()
@@ -106,7 +128,7 @@ public class DialogueManager : MonoBehaviour
         currentStory.ResetState();
         runNumber++;
         betweenRunsPanel.SetActive(true);
-        betweenRunsText.text = "Run: " + runNumber + " out of 10. Press [A] to try again!";
+        betweenRunsText.text = "Run: " + runNumber + " out of 10.";
     }
 
     private void DisplayChoices()
@@ -123,6 +145,20 @@ public class DialogueManager : MonoBehaviour
         {
             choices[index].gameObject.SetActive(true);
             choicesText[index].text = choice.text;
+
+            if (!currentStory.currentTags.Contains("Abby"))
+            {
+
+                choicesText[index].color = abbyColor;
+                choicesText[index].fontStyle = FontStyles.Italic;
+                dialogueText.fontStyle = FontStyles.Bold;
+            }
+            else
+            {
+                choicesText[index].color = playerColor;
+                choicesText[index].fontStyle = FontStyles.Bold;
+            }
+
             index++;
         }
 

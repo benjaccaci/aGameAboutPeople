@@ -85,10 +85,6 @@ Abby: “Wait, what do you mean by that?”
                     Abby: “I mean… I guess I don’t. But what’s that got to do with paradoxes? Get lost."
                         {lossCondition}
                         -> DONE
-                        
-                        
-                        
-                        
  * It’s nothing personal, it’s just called the friendship paradox.
     * * Abby: “Friendship paradox? What’s that?”
         * * * It’s a paradox that states that all your friends are more popular than you.
