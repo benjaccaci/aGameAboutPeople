@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Ink.Runtime;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -100,7 +101,7 @@ public class DialogueManager : MonoBehaviour
                 dialogueText.fontStyle = FontStyles.Bold;
             }
             DisplayChoices();
-            canPressButtonE = true;
+        
         } else
         {
             ExitDialogue();
@@ -129,6 +130,7 @@ public class DialogueManager : MonoBehaviour
         runNumber++;
         betweenRunsPanel.SetActive(true);
         betweenRunsText.text = "Run: " + runNumber + " out of 10.";
+        canPressButtonE = false;
     }
 
     private void DisplayChoices()
@@ -165,9 +167,11 @@ public class DialogueManager : MonoBehaviour
         if (index == 0)
         {
             promptNextLineDialogue.SetActive(true);
+            canPressButtonE = true;
         } else
         {
             promptNextLineDialogue.SetActive(false);
+            canPressButtonE = false;
         }
 
         for (int i = index; i < choices.Length; i++)
@@ -186,6 +190,12 @@ public class DialogueManager : MonoBehaviour
     public void firstStart()
     {
         EnterDialogue();
+    }
+
+    public void ReloadScene()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
 
